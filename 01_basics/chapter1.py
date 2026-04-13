@@ -10,7 +10,7 @@ print(f" ID of 2: {id(2)}")
 print(f" ID of 2: {id(12)}")
 
 
-# MUTABLE - REFERENCE ID WILL BE THE SAME
+# IMMUTABLE - REFERENCE ID WILL BE THE SAME
 spice_mix = set()
 print(f'Initial spice mix ID is {id(spice_mix)}')
 spice_mix.add("Ginger")
