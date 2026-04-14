@@ -3,7 +3,7 @@
 ## FIRT OPTION
 
 - create folder
-- python3 -m venv .venv # .venv can be any name
+- python3 -m venv .venv 
 - source .venv/bin/activate
 
 ## SECOND OPTION
