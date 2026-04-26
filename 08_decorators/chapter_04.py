@@ -10,9 +10,10 @@ def cache_results(func):
         if key in cache:
             return f"From Cache: {cache[key]}"
 
-        result = func(*args, **kwargs)
-        cache[key] = result
-        return f"Computed: {result}"
+        else:
+            result = func(*args, **kwargs)
+            cache[key] = result
+            return f"Computed: {result}"
 
     return wrapper
 
