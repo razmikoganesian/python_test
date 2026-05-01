@@ -11,12 +11,12 @@ class SmartDevice:
 
 
     def get_status(self):
-        status = "ON" if {self.power_status} else "OFF"
+        status = "ON" if self.power_status else "OFF"
         return f"{self.device_name} is {status} - {self.brand}"
     
 
 
 a = SmartDevice("Fan", False)
-b = SmartDevice("AC", True))
+b = SmartDevice("AC", True)
 print(a.get_status())
 print(b.get_status())
