@@ -4,7 +4,7 @@ entry = input("what did you learned today?  ").strip()
 rating = input("Please rat your productivity for today  ").strip()
 
 now = datetime.datetime.now()
-date_str  = now.strftime("%Y-%m-%d - $I:%M %p")
+date_str  = now.strftime("%Y-%m-%d - %I:%M %p")
 
 journal_entry = f"\n 📅 {date_str}\n{entry}"
 if rating:
