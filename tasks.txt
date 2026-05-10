@@ -1,0 +1,2 @@
+Learn python||not_done
+Catch oil price||done
