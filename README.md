@@ -15,7 +15,8 @@ pip install -r requirements.txt
 ## VENV
 
 - for activation
-  soucre bin/activate
+  python -m venv venv
+  source venv/bin/activate
 - for deactivation
   deactivate
 
