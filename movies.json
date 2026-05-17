@@ -1,0 +1,12 @@
+[
+  {
+    "title": "gladiator",
+    "genre": "action",
+    "rating": 10.0
+  },
+  {
+    "title": "matrix",
+    "genre": "fantasy",
+    "rating": 8.0
+  }
+]
