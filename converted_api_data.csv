@@ -1,0 +1,4 @@
+id,name,email,location,is_active
+101,Alex,alex@mail.com,Madrid,True
+102,Nick,nick@mail.com,Manchester,True
+103,Robert,robert@mail.com,London,False

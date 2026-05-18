@@ -1,0 +1,23 @@
+[
+  {
+    "id": 101,
+    "name": "Alex",
+    "email": "alex@mail.com",
+    "location": "Madrid",
+    "is_active": true
+  },
+  {
+    "id": 102,
+    "name": "Nick",
+    "email": "nick@mail.com",
+    "location": "Manchester",
+    "is_active": true
+  },
+  {
+    "id": 103,
+    "name": "Robert",
+    "email": "robert@mail.com",
+    "location": "London",
+    "is_active": false
+  }
+]
