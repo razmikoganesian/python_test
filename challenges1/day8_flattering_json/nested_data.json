@@ -1,0 +1,17 @@
+{
+  "user": {
+    "id": 2045,
+    "full_name": "string string",
+    "phone": "+551234571",
+    "created_at": "2026-05-19T12:11:25.897745",
+    "avatar": null,
+    "jid": "551234571@s.whatsapp.net",
+    "assigned_to": null,
+    "has_card_on_kanban_boards": null,
+    "roles": ["admin", "doctor"],
+    "address": {
+      "city": "London",
+      "post_code": 233445
+    }
+  }
+}
