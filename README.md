@@ -1,6 +1,6 @@
 ## Create VIRTUAL ENV
 
-## FIRT OPTION
+## FIRST OPTION
 
 - create folder
 - python3 -m venv .venv
