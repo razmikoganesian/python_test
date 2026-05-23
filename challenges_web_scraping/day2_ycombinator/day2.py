@@ -52,13 +52,7 @@ def main():
         
 if __name__ == "__main__":
     main()
-  
 
-
-    
-    
-
-    
 
 
 get_titles_and_urls_(URL)
