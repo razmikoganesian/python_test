@@ -10,9 +10,9 @@ def download_video(url):
         os.makedirs(DOWNLOAD_DIR)
 
     ydl_opts = {
-    'format': 'bestvideo[vcodec*=avc1][height<=1080]+bestaudio[ext=m4a]',
-    'merge_output_format': 'mp4',
-    'outtmpl': '%(title)s.%(ext)s',
+        "format": "bestvideo[vcodec*=avc1][height<=1080]+bestaudio[ext=m4a]",
+        "merge_output_format": "mp4",
+        "outtmpl": "%(title)s.%(ext)s",
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:

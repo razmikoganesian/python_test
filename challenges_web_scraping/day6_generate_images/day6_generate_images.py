@@ -5,9 +5,9 @@ import textwrap
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
-
 BASE_URL = "https://quotes.toscrape.com/"
 OUTPUT_DIRECTORY = "quotes"
+
 
 def fetch_quotes():
     response = requests.get(BASE_URL)
@@ -21,14 +21,10 @@ def fetch_quotes():
 
         tags = [tag.text.strip() for tag in q.select(".tag")]
 
-        quote_data.append({
-            "text": text,
-            "author": author,
-            "tags": tags
-        })
-
+        quote_data.append({"text": text, "author": author, "tags": tags})
 
     return quote_data
+
 
 def create_image(text, author, index):
     width, height = 800, 400
@@ -46,10 +42,9 @@ def create_image(text, author, index):
     y_text = 60
     draw.text((40, y_text), wrapped, font=font, fill=text_color)
 
-    y_text += wrapped.count('\n') * 15 + 40
+    y_text += wrapped.count("\n") * 15 + 40
 
-    draw.text((500, y_text), author_text, font=font, fill=text_color )
-    
+    draw.text((500, y_text), author_text, font=font, fill=text_color)
 
     # save image
     if not os.path.exists(OUTPUT_DIRECTORY):
@@ -60,17 +55,12 @@ def create_image(text, author, index):
     image.save(filename)
     print("Picture created and saved!")
 
+
 def main():
     quotes = fetch_quotes()
     for index, quote in enumerate(quotes):
-        create_image(
-            quote["text"],
-            quote["author"],
-            index
-        )
+        create_image(quote["text"], quote["author"], index)
+
 
 if __name__ == "__main__":
     main()
-
-
-

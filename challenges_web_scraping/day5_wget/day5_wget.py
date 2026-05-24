@@ -9,11 +9,11 @@ import re
 import wget
 
 BASE_URL = "https://books.toscrape.com/"
-IMAGE_DIR = 'books_images'
+IMAGE_DIR = "books_images"
 
 
 def sanitize_file_name(title):
-    return re.sub(r"[^\w\-_. ]", "", title).replace(' ', '_')
+    return re.sub(r"[^\w\-_. ]", "", title).replace(" ", "_")
 
 
 def scrape_and_download_images():
@@ -37,15 +37,14 @@ def scrape_and_download_images():
         filename = sanitize_file_name(title) + ".jpg"
         filepath = os.path.join(IMAGE_DIR, filename)
 
-        wget.download(image_url, filepath )
-    
+        wget.download(image_url, filepath)
+
     print("All books cover downloaded")
 
 
 def main():
     scrape_and_download_images()
 
+
 if __name__ == "__main__":
     main()
-
-

@@ -8,19 +8,18 @@ from urllib.parse import urljoin
 import re
 
 BASE_URL = "https://books.toscrape.com/"
-IMAGE_DIR = 'books_images'
-
+IMAGE_DIR = "books_images"
 
 
 def sanitize_file_name(title):
-    return re.sub(r"[^\w\-_. ]", "", title).replace(' ', '_')
+    return re.sub(r"[^\w\-_. ]", "", title).replace(" ", "_")
 
 
 def download_images(image_url, filename):
     try:
         response = requests.get(image_url, stream=True, timeout=10)
         response.raise_for_status()
-        with open(filename, 'wb') as f:
+        with open(filename, "wb") as f:
             for chunk in response.iter_content(1024):
                 f.write(chunk)
 
@@ -52,14 +51,13 @@ def scrape_and_download_images():
 
         print(f"Downloading: {title} ")
         download_images(image_url, filepath)
-    
+
     print("All books cover downloaded")
 
 
 def main():
     scrape_and_download_images()
 
+
 if __name__ == "__main__":
     main()
-
-
