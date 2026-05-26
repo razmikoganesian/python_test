@@ -1,0 +1,626 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test Report</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: #f8f9fa;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px; 
+            border-radius: 12px; 
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header h1 { margin: 0; font-size: 2.5em; }
+        .header p { margin: 10px 0 0 0; opacity: 0.9; }
+        
+        .stats { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px; 
+            margin: 30px 0; 
+        }
+        .stat { 
+            padding: 25px; 
+            border-radius: 12px; 
+            text-align: center; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .stat:hover { transform: translateY(-2px); }
+        .stat h3 { margin: 0; font-size: 2.5em; font-weight: bold; }
+        .stat p { margin: 10px 0 0 0; font-size: 1.1em; font-weight: 500; }
+        
+        .passed { background: #d4edda; color: #155724; border-left: 5px solid #28a745; }
+        .failed { background: #f8d7da; color: #721c24; border-left: 5px solid #dc3545; }
+        .skipped { background: #fff3cd; color: #856404; border-left: 5px solid #ffc107; }
+        
+        .test-list { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .test-list h2 { 
+            margin-top: 0; 
+            color: #333; 
+            border-bottom: 2px solid #eee; 
+            padding-bottom: 15px;
+        }
+
+        .status-section { margin-bottom: 28px; }
+        .status-section:last-child { margin-bottom: 0; }
+        .status-heading {
+            margin: 0 0 14px 0;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-heading-failed { color: #721c24; }
+        .status-heading-passed { color: #155724; }
+        .status-heading-skipped { color: #856404; }
+        .status-icon { font-weight: 700; }
+        .status-count { font-weight: 400; opacity: 0.85; font-size: 0.9em; }
+
+        .folder-group {
+            margin-bottom: 20px;
+            margin-left: 4px;
+            padding-left: 12px;
+            border-left: 3px solid #adb5bd;
+        }
+        .folder-label {
+            margin: 0 0 12px 0;
+            font-size: 1.05em;
+            font-weight: 700;
+            color: #343a40;
+        }
+
+        .file-group {
+            margin-bottom: 14px;
+            margin-left: 8px;
+            padding-left: 12px;
+            border-left: 2px solid #dee2e6;
+        }
+        .file-path {
+            margin: 0 0 8px 0;
+            font-size: 0.88em;
+            font-weight: 600;
+            color: #495057;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        .empty-hint {
+            background: #e9ecef;
+            border-left: 4px solid #6c757d;
+            padding: 15px 20px;
+            border-radius: 8px;
+        }
+        
+        .test-item { 
+            padding: 10px 16px; 
+            margin: 6px 0 6px 4px; 
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .test-item:hover { transform: translateX(4px); }
+        
+        .test-passed { background: #d4edda; border-left: 4px solid #28a745; }
+        .test-failed { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .test-skipped { background: #fff3cd; border-left: 4px solid #ffc107; }
+        
+        .test-name { 
+            font-weight: 500; 
+            font-size: 1.02em;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #eee;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745 0%, #28a745 97.75280898876404%, #ffc107 97.75280898876404%, #ffc107 100%, #dc3545 100%);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Test Report</h1>
+            <p>Date: 5/26/2026, 11:18:44 AM</p>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat passed">
+                <h3>87</h3>
+                <p>Passed</p>
+            </div>
+            <div class="stat failed">
+                <h3>0</h3>
+                <p>Failed</p>
+            </div>
+            <div class="stat skipped">
+                <h3>2</h3>
+                <p>Skipped</p>
+            </div>
+        </div>
+        
+        <div class="test-list">
+            <h2>Test Results (89 total)</h2>
+            <div class="status-section status-block-passed">
+<h3 class="status-heading status-heading-passed"><span class="status-icon">[PASS]</span> Passed <span class="status-count">(87)</span></h3>
+<div class="folder-group">
+<h4 class="folder-label">tests/auth</h4>
+<div class="file-group">
+<h5 class="file-path">tests/auth/auth.setup.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[setup] tests/auth/auth.setup.ts › authenticate @437</span>
+                </div>
+</div>
+<div class="file-group">
+<h5 class="file-path">tests/auth/login.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-login-tests] tests/auth/login.spec.ts › Login Tests › Successful login via email and password @418</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-login-tests] tests/auth/login.spec.ts › Login Tests › Successful setup Sing-in via google + authorize via Google @420</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-login-tests] tests/auth/login.spec.ts › Login Tests › User can`t login via Google with NOT linked account via Sign-in options @421</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-login-tests] tests/auth/login.spec.ts › Login Tests › User can`t login with invalid credentials @C419</span>
+                </div>
+</div>
+<div class="file-group">
+<h5 class="file-path">tests/auth/registration.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-registration-tests] tests/auth/registration.spec.ts › Registration Tests › Create account via email @426</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-registration-tests] tests/auth/registration.spec.ts › Registration Tests › User can log out during registration process and then continue registration @440</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-registration-tests] tests/auth/registration.spec.ts › Registration Tests › User can`t create account with email which already registered @427</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-registration-tests] tests/auth/registration.spec.ts › Registration Tests › User can`t create account with invalid data in email field @428</span>
+                </div>
+</div>
+</div>
+<div class="folder-group">
+<h4 class="folder-label">tests/automation</h4>
+<div class="file-group">
+<h5 class="file-path">tests/automation/automation.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/automation/automation.spec.ts › Automation Tests › Availability subpages: Keywords, Sequences и Webhooks @C438</span>
+                </div>
+</div>
+</div>
+<div class="folder-group">
+<h4 class="folder-label">tests/contacts</h4>
+<div class="file-group">
+<h5 class="file-path">tests/contacts/contacts_search_filters_via_import.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › Counter in &quot;Show count of filtered users&quot; button displays correct data when several contacts is filtered @C92</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › Empty &quot;Contacts table&quot; is displayed if none of the contacts have the value of the applied filter @C94</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › Filter several contacts by tag with &quot;TAG is&quot; option @C113</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › Reset filter via &quot;Close&quot; option on the applied filter button @C93</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › Reset filters via &quot;Reset&quot; button @C95</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › Reset one of the two applied filters via &quot;Close&quot; option on the applied filter button @C96</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › User can filter contacts by Phone with &quot;PHONE is not&quot; option @C119</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › User can filter contacts by Phone with &quot;PHONE is&quot; option @C118</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › User can filter several contacts by tag with &quot;TAG is not&quot; option @C115</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › Verify user can find existing contact by name via &quot;Search&quot; + search not existing contact by name @C84</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_import.spec.ts › Contacts Tests Search and Filters EmptyOfficialCompany › Verify user can find existing contact by phone number via &quot;Search&quot; + search not existing contact by phone @C85</span>
+                </div>
+</div>
+<div class="file-group">
+<h5 class="file-path">tests/contacts/contacts.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts.spec.ts › Contacts Tests › Create contact with all fields @C75</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts.spec.ts › Contacts Tests › Verify user can open Template with contacts via &quot;Template&quot; link in the &quot;Import contacts&quot; modal window @C81</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts.spec.ts › Contacts Tests › Verify user can upload file with contacts and import contacts to the Contacts page @C82</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts.spec.ts › Contacts Tests › Verify user can`t create contact with duplicate phone number @C77</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts.spec.ts › Contacts Tests › Verify user can`t create contact without first name @C71</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts.spec.ts › Contacts Tests › Verify user can`t create contact without phone number  @C72</span>
+                </div>
+</div>
+</div>
+<div class="folder-group">
+<h4 class="folder-label">tests/flows</h4>
+<div class="file-group">
+<h5 class="file-path">tests/flows/default_flows.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Change Default flow for media @408</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Change Default message flow @407</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Change Post-Support Flow @409</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Change Welcome message flow @28</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default flow for media with digit @390</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default flow for media with length15 @392</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default flow for media with letter @21</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default flow for media with maxLength255 @393</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default flow for media with symbol @391</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default message flow with digit @386</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default message flow with length15 @388</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default message flow with letter @18</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default message flow with maxLength255 @389</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Default message flow with symbol @387</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Post-Support Flow with digit @394</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Post-Support Flow with length15 @396</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Post-Support Flow with letter @22</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Post-Support Flow with maxLength255 @397</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Post-Support Flow with symbol @395</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Welcome message flow with digit @382</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Welcome message flow with length15 @384</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Welcome message flow with letter @17</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Welcome message flow with maxLength255 @385</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Create and bind Welcome message flow with symbol @383</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Search, select and bind Default flow for media @405</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Search, select and bind Default message flow @404</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Search, select and bind Post-Support Flow @406</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Search, select and bind Welcome message flow @27</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Select and bind Default flow for media @402</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Select and bind Default message flow @401</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Select and bind Post-Support Flow @403</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Select and bind Welcome message flow @26</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Unbind Default flow for media @399</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Unbind Default message flow @398</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Unbind Post-Support Flow @400</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/default_flows.spec.ts › Basic default flows › Unbind Welcome message flow @25</span>
+                </div>
+</div>
+<div class="file-group">
+<h5 class="file-path">tests/flows/flows.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows - empty page › Create flow with digit via &quot;Add new flow&quot; button @414</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows - empty page › Create flow with length15 via &quot;Add new flow&quot; button @416</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows - empty page › Create flow with letter via &quot;Add new flow&quot; button @6</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows - empty page › Create flow with maxLength255 via &quot;Add new flow&quot; button @417</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows - empty page › Create flow with symbol via &quot;Add new flow&quot; button @415</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows - empty page › Delete all flows via &quot;Options on selected&quot; dropdown menu @12</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows - empty page › Delete one flow via &quot;Options on selected&quot; dropdown menu @11</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows › Create flow with digit via &quot;Create new flow&quot; button @410</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows › Create flow with length15 via &quot;Create new flow&quot; button @412</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows › Create flow with letter via &quot;Create new flow&quot; button @2</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows › Create flow with maxLength255 via &quot;Create new flow&quot; button @413</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows › Create flow with symbol via &quot;Create new flow&quot; button @411</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/flows/flows.spec.ts › Flows › Open flow by clicking on the row @10</span>
+                </div>
+</div>
+</div>
+<div class="folder-group">
+<h4 class="folder-label">tests/general</h4>
+<div class="file-group">
+<h5 class="file-path">tests/general/general.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/general/general.spec.ts › General Tests › Availability - no blank pages for Official Company API @C431</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/general/general.spec.ts › General Tests › Logout via user menu  @C424</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/general/general.spec.ts › General Tests › Logout via user-profile menu @C425</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/general/general.spec.ts › General Tests › Open bug report @C422</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/general/general.spec.ts › General Tests › Open discord community @C423</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/general/general.spec.ts › General Tests › Open help center @C1</span>
+                </div>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/general/general.spec.ts › General Tests › Verify Starter Plan restrictions (Unofficial WA) @C439</span>
+                </div>
+</div>
+</div>
+<div class="folder-group">
+<h4 class="folder-label">tests/inbox</h4>
+<div class="file-group">
+<h5 class="file-path">tests/inbox/inbox.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/inbox/inbox.spec.ts › Inbox Tests › Verify Inbox page dont`t have blank pages for Official Company API  @C433</span>
+                </div>
+</div>
+</div>
+<div class="folder-group">
+<h4 class="folder-label">tests/kanban</h4>
+<div class="file-group">
+<h5 class="file-path">tests/kanban/kanban.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/kanban/kanban.spec.ts › Kanban Tests › Verify Kanban page dont`t have blank pages for Official Company API @C434</span>
+                </div>
+</div>
+</div>
+<div class="folder-group">
+<h4 class="folder-label">tests/settings</h4>
+<div class="file-group">
+<h5 class="file-path">tests/settings/settings.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/settings/settings.spec.ts › Settings Tests › Verify Settings subpages dont`t have blank pages for Official Company API  @C435</span>
+                </div>
+</div>
+</div>
+<div class="folder-group">
+<h4 class="folder-label">tests/templates</h4>
+<div class="file-group">
+<h5 class="file-path">tests/templates/templates.spec.ts</h5>
+
+                <div class="test-item test-passed">
+                    <span class="test-name">[chromium-authenticated] tests/templates/templates.spec.ts › Templates Tests › Verify Template page dont`t have blank pages for Unofficial Company API  @C436</span>
+                </div>
+</div>
+</div>
+</div>
+<div class="status-section status-block-skipped">
+<h3 class="status-heading status-heading-skipped"><span class="status-icon">[SKIP]</span> Skipped <span class="status-count">(2)</span></h3>
+<div class="folder-group">
+<h4 class="folder-label">tests/auth</h4>
+<div class="file-group">
+<h5 class="file-path">tests/auth/registration.spec.ts</h5>
+
+                <div class="test-item test-skipped">
+                    <span class="test-name">[chromium-registration-tests] tests/auth/registration.spec.ts › Registration Tests › User can`t create account with not match passwords @429</span>
+                </div>
+</div>
+</div>
+<div class="folder-group">
+<h4 class="folder-label">tests/contacts</h4>
+<div class="file-group">
+<h5 class="file-path">tests/contacts/contacts_search_filters_via_api.spec.ts</h5>
+
+                <div class="test-item test-skipped">
+                    <span class="test-name">[chromium-authenticated] tests/contacts/contacts_search_filters_via_api.spec.ts › Contacts Tests Search and Filters › Test description @CXX</span>
+                </div>
+</div>
+</div>
+</div>
+        </div>
+        
+        <div class="footer">
+            <p>Detailed Playwright report available in <strong>playwright-report/index.html</strong></p>
+            <p>Generated automatically at 2026-05-26T11:18:44.224Z</p>
+        </div>
+    </div>
+</body>
+</html>
